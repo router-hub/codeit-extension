@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src {{cspSource}} 'unsafe-inline'; script-src {{cspSource}} 'unsafe-inline';">
+    <link rel="stylesheet" href="{{CSS_URI}}">
+    <title>codeIt Assistant</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with context indicators -->
+        <div class="header">
+            <div class="header-left">
+                <h3>🤖 codeIt Assistant</h3>
+                
+                <!-- NEW: Mode Selection Dropdown (Add this section) -->
+                <div class="mode-selection" id="mode-selection">
+                    <div class="current-mode" id="current-mode">
+                        <span class="mode-icon" id="mode-icon">💬</span>
+                        <span class="mode-text" id="mode-text">Chat Mode</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="mode-dropdown" id="mode-dropdown" style="display: none;">
+                        <div class="mode-option" data-mode="chat">
+                            <span class="mode-icon">💬</span>
+                            <div class="mode-details">
+                                <div class="mode-title">Chat Mode</div>
+                                <div class="mode-description">Ask questions, get explanations, discuss code</div>
+                            </div>
+                        </div>
+                        <div class="mode-option" data-mode="smart">
+                            <span class="mode-icon">🤖</span>
+                            <div class="mode-details">
+                                <div class="mode-title">Smart Agent Mode</div>
+                                <div class="mode-description">Execute intelligent file operations and modifications</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="context-indicators" id="context-indicators">
+                    <!-- Dynamic context badges will appear here -->
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="clear-context" class="context-clear-btn" title="Clear all context">
+                    🗑️
+                </button>
+                <button id="new-chat" class="new-chat-button">New Chat</button>
+            </div>
+        </div>
+        
+        <!-- Mode Description Banner (Add this section) -->
+        <div class="mode-banner" id="mode-banner">
+            <div class="mode-banner-content">
+                <span class="mode-banner-icon" id="mode-banner-icon">💬</span>
+                <span class="mode-banner-text" id="mode-banner-text">
+                    Chat mode: Ask questions about your code, get explanations, and discuss programming concepts.
+                </span>
+            </div>
+        </div>
+        
+        <!-- Active File Banner (Cursor-style) -->
+        <div class="active-file-banner" id="active-file-banner" style="display: none;">
+            <div class="active-file-info">
+                <span class="active-file-icon">📄</span>
+                <span class="active-file-name" id="active-file-name"></span>
+                <span class="active-file-path" id="active-file-path"></span>
+            </div>
+            <div class="active-file-actions">
+                <button class="action-btn include-btn" id="include-active-file">
+                    <span class="btn-icon">➕</span>
+                    Include
+                </button>
+                <button class="action-btn dismiss-btn" id="dismiss-active-file">
+                    <span class="btn-icon">✕</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Container -->
+        <div class="chat-container" id="chat-container">
+            <div class="message assistant">
+                <div class="message-content">
+                    Hello! I'm codeIt, your AI coding assistant. I can help you in two ways:
+                    <br><br>
+                    <strong>💬 Chat Mode:</strong> Ask questions, get explanations, discuss your code
+                    <br>
+                    <strong>🤖 Smart Agent Mode:</strong> Execute file operations, apply changes across your project
+                    <br><br>
+                    <strong>💡 Tips:</strong>
+                    <ul>
+                        <li>Switch modes using the dropdown above</li>
+                        <li>Your currently open file will automatically appear as context</li>
+                        <li>Drag and drop files from the explorer to add them</li>
+                        <li>Select code and it will be suggested as context</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typing-indicator">
+            <span id="typing-agent-name">codeIt</span> is thinking<span class="typing-dots">...</span>
+        </div>
+        
+        <!-- Context Drop Zone -->
+        <div class="drop-zone" id="drop-zone">
+            <div class="drop-zone-content">
+                <div class="drop-icon">📁</div>
+                <div class="drop-text">Drop files here to add context</div>
+            </div>
+        </div>
+        
+        <!-- Enhanced Input Container -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <!-- Context Pills Area -->
+                <div class="context-pills" id="context-pills">
+                    <!-- Dynamic context pills will appear here -->
+                </div>
+                
+                <!-- Input Row -->
+                <div class="input-row">
+                    <button id="attach-file" class="attach-button" title="Add files or code">
+                        📎
+                    </button>
+                    <textarea 
+                        id="message-input" 
+                        class="message-input" 
+                        placeholder="Ask about your code, request changes, or get explanations..."
+                        rows="1"
+                    ></textarea>
+                    <button id="send-button" class="send-button">
+                        <span class="send-icon">➤</span>
+                    </button>
+                </div>
+                
+                <!-- Mode-specific help text (Add this section) -->
+                <div class="input-help" id="input-help">
+                    <div class="help-text chat-help" id="chat-help">
+                        💬 Ask questions like: "What does this function do?", "How can I improve this code?"
+                    </div>
+                    <div class="help-text smart-help" id="smart-help" style="display: none;">
+                        🤖 Try commands like: "Update UserService to add logging", "Fix all TypeScript errors"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Context Menu -->
+    <div class="context-menu" id="context-menu" style="display: none;">
+        <div class="context-menu-item" data-action="include-file">
+            <span class="menu-icon">📄</span>
+            Include File
+        </div>
+        <div class="context-menu-item" data-action="include-selection">
+            <span class="menu-icon">✂️</span>
+            Include Selection
+        </div>
+        <div class="context-menu-item" data-action="add-custom-code">
+            <span class="menu-icon">✏️</span>
+            Add Custom Code
+        </div>
+    </div>
+    
+    <script src="{{JS_URI}}"></script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+{
+  "name": "codeit",
+  "displayName": "codeIt",
+  "description": "AI-powered coding assistant with Perplexity integration",
+  "version": "0.0.1",
+  "publisher": "codeit",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:codeit.askCodeIt",
+    "onCommand:codeit.chatMode",
+    "onCommand:codeit.smartAgentMode",
+    "onCommand:codeit.refactorSelection",
+    "onCommand:codeit.generateCode",
+    "onCommand:codeit.configureAPI",
+    "onCommand:codeit.testConnection",
+    "onCommand:codeit.undoLastChange",
+    "onCommand:codeit.startChat",
+    "onCommand:codeit.quickChat",
+    "onCommand:codeit.showHistory",
+    "onCommand:codeit.clearHistory",
+    "onCommand:codeit.exportHistory",
+    "onCommand:codeit.refreshProjectIndex",
+    "onCommand:codeit.showSmartAgentDebug",
+    "onCommand:codeit.debugContext",
+    "onCommand:codeit.testChat",
+    "onCommand:codeit.setApiKey",
+    "onView:codeit.chatView"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeit.askCodeIt",
+        "title": "codeIt: Ask codeIt",
+        "category": "codeIt",
+        "icon": "$(robot)"
+      },
+      {
+        "command": "codeit.chatMode",
+        "title": "codeIt: Chat Mode",
+        "category": "codeIt",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "codeit.smartAgentMode",
+        "title": "codeIt: Smart Agent Mode",
+        "category": "codeIt",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "codeit.refactorSelection",
+        "title": "codeIt: Refactor Selection",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.generateCode",
+        "title": "codeIt: Generate Code",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.configureAPI",
+        "title": "codeIt: Configure API Key",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.testConnection",
+        "title": "codeIt: Test Connection",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.undoLastChange",
+        "title": "codeIt: Undo Last Change",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.startChat",
+        "title": "codeIt: Start Chat",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.quickChat",
+        "title": "codeIt: Quick Chat",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.showHistory",
+        "title": "codeIt: Show History",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.clearHistory",
+        "title": "codeIt: Clear History",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.exportHistory",
+        "title": "codeIt: Export History",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.refreshProjectIndex",
+        "title": "codeIt: Refresh Project Index",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.showSmartAgentDebug",
+        "title": "codeIt: Show Smart Agent Debug",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.debugContext",
+        "title": "codeIt: Debug Context",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.testChat",
+        "title": "codeIt: Test Chat",
+        "category": "codeIt"
+      },
+      {
+        "command": "codeit.setApiKey",
+        "title": "codeIt: Set API Key",
+        "category": "codeIt"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "codeit.askCodeIt"
+        },
+        {
+          "command": "codeit.chatMode"
+        },
+        {
+          "command": "codeit.smartAgentMode"
+        },
+        {
+          "command": "codeit.refactorSelection",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "codeit.generateCode"
+        },
+        {
+          "command": "codeit.configureAPI"
+        },
+        {
+          "command": "codeit.testConnection"
+        },
+        {
+          "command": "codeit.undoLastChange"
+        },
+        {
+          "command": "codeit.startChat"
+        },
+        {
+          "command": "codeit.quickChat"
+        },
+        {
+          "command": "codeit.showHistory"
+        },
+        {
+          "command": "codeit.clearHistory"
+        },
+        {
+          "command": "codeit.exportHistory"
+        },
+        {
+          "command": "codeit.refreshProjectIndex"
+        },
+        {
+          "command": "codeit.showSmartAgentDebug"
+        },
+        {
+          "command": "codeit.debugContext"
+        },
+        {
+          "command": "codeit.testChat"
+        },
+        {
+          "command": "codeit.setApiKey"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "codeit.askCodeIt",
+          "group": "1_modification@1"
+        },
+        {
+          "command": "codeit.refactorSelection",
+          "when": "editorHasSelection",
+          "group": "1_modification@2"
+        },
+        {
+          "command": "codeit.generateCode",
+          "when": "!editorHasSelection",
+          "group": "1_modification@3"
+        },
+        {
+          "command": "codeit.quickChat",
+          "when": "editorHasSelection",
+          "group": "1_modification@4"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "codeit.chatView",
+          "name": "codeIt Chats",
+          "when": "true"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "codeit.askCodeIt",
+        "key": "ctrl+shift+i",
+        "mac": "cmd+shift+i",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "codeit.quickChat",
+        "key": "ctrl+shift+q",
+        "mac": "cmd+shift+q",
+        "when": "editorHasSelection"
+      }
+    ],
+    "configuration": {
+      "title": "codeIt",
+      "properties": {
+        "codeit.maxContextLines": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum lines of context to include in AI requests",
+          "minimum": 10,
+          "maximum": 500
+        },
+        "codeit.confidenceThreshold": {
+          "type": "number",
+          "default": 0.7,
+          "description": "Minimum confidence threshold for automatic code application",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "codeit.autoApplyChanges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically apply AI suggestions without confirmation"
+        },
+        "codeit.showDiffPreview": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show diff preview before applying changes"
+        },
+        "codeit.validateSyntax": {
+          "type": "boolean",
+          "default": true,
+          "description": "Validate syntax before applying code changes"
+        },
+        "codeit.trackChanges": {
+          "type": "boolean",
+          "default": true,
+          "description": "Track and store history of AI-generated changes"
+        },
+        "codeit.showAlternatives": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show alternative code solutions when available"
+        },
+        "codeit.requestTimeout": {
+          "type": "number",
+          "default": 30000,
+          "description": "API request timeout in milliseconds",
+          "minimum": 5000,
+          "maximum": 120000
+        },
+        "codeit.defaultModel": {
+          "type": "string",
+          "default": "sonar",
+          "description": "Default Perplexity AI model to use",
+          "enum": [
+            "sonar",
+            "sonar-pro",
+            "sonar-large-32k-online",
+            "sonar-medium-online"
+          ]
+        },
+        "codeit.defaultTemperature": {
+          "type": "number",
+          "default": 0.3,
+          "description": "Default temperature for AI responses (0.0-2.0)",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "codeit.maxTokens": {
+          "type": "number",
+          "default": 10000,
+          "description": "Maximum tokens for AI responses",
+          "minimum": 1000,
+          "maximum": 32000
+        },
+        "codeit.enableLogging": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable debug logging for troubleshooting"
+        },
+        "codeit.autoSaveChats": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically save chat sessions"
+        },
+        "codeit.chatHistoryLimit": {
+          "type": "number",
+          "default": 100,
+          "description": "Maximum number of chat messages to keep in history",
+          "minimum": 10,
+          "maximum": 1000
+        },
+        "codeit.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notifications for successful operations"
+        },
+        "codeit.enableCodeContext": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include surrounding code context in AI requests"
+        },
+        "codeit.includeGitInfo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include git branch and diff information in context"
+        },
+        "codeit.preferredCodeStyle": {
+          "type": "string",
+          "default": "preserve",
+          "description": "How to handle code formatting",
+          "enum": [
+            "preserve",
+            "format",
+            "optimize"
+          ],
+          "enumDescriptions": [
+            "Preserve existing code style",
+            "Apply consistent formatting",
+            "Optimize for readability and performance"
+          ]
+        },
+        "codeit.retryAttempts": {
+          "type": "number",
+          "default": 3,
+          "description": "Number of retry attempts for failed API requests",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "codeit.retryDelay": {
+          "type": "number",
+          "default": 1000,
+          "description": "Delay between retry attempts in milliseconds",
+          "minimum": 500,
+          "maximum": 10000
+        },
+        "codeit.enableTokenOptimization": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable intelligent token optimization for prompts"
+        },
+        "codeit.prioritizePrecision": {
+          "type": "boolean",
+          "default": true,
+          "description": "Prioritize precision over comprehensive explanations"
+        },
+        "codeit.useMarkdownSections": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use structured markdown sections in prompts"
+        },
+        "codeit.includeFileMetadata": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include file metadata in context (functions, classes, etc.)"
+        },
+        "codeit.generateScopedInstructions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Generate scoped instructions to prevent unwanted changes"
+        },
+        "codeit.structuredFormat": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use structured formatting for context prompts"
+        },
+        "codeit.includeBoundaries": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include clear boundaries in prompts"
+        },
+        "codeit.includeFileSummaries": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include file summaries instead of full content for context files"
+        },
+        "codeit.maxSummaryFiles": {
+          "type": "number",
+          "default": 5,
+          "description": "Maximum number of summary files to include",
+          "minimum": 1,
+          "maximum": 20
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.74.0",
+    "@vscode/vsce": "^2.15.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "glob": "^11.0.3"
+  },
+  "keywords": [
+    "ai",
+    "coding",
+    "assistant",
+    "perplexity",
+    "refactor",
+    "code generation",
+    "smart-agent",
+    "context-aware",
+    "intelligent-assistant",
+    "file-operations"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/codeit-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/codeit-extension/issues"
+  },
+  "homepage": "https://github.com/yourusername/codeit-extension#readme",
+  "icon": "icon.png"
+}
