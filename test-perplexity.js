@@ -1,7 +1,14 @@
 const https = require('https');
 
-// Configuration
-const API_KEY = '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'; // Replace with your actual API key
+// Load environment variables from .env file if it exists
+try {
+  require('dotenv').config();
+} catch (error) {
+  // dotenv not installed, continue without it
+}
+
+// Configuration - Use environment variable for API key
+const API_KEY = process.env.PERPLEXITY_API_KEY || process.env.PPLX_API_KEY;
 const API_URL = 'https://api.perplexity.ai/chat/completions';
 
 // Test request data
@@ -27,6 +34,11 @@ const testRequest = {
 // Function to make the API call
 function callPerplexityAPI() {
   return new Promise((resolve, reject) => {
+    if (!API_KEY) {
+      reject(new Error('API key not found. Please set PERPLEXITY_API_KEY or PPLX_API_KEY environment variable.'));
+      return;
+    }
+
     const postData = JSON.stringify(testRequest);
     
     const options = {
@@ -89,8 +101,8 @@ function callPerplexityAPI() {
 async function runTests() {
   console.log('🧪 Testing Perplexity API Integration\n');
   
-  if (API_KEY === 'YOUR_API_KEY_HERE') {
-    console.log('❌ Please set your API key in the API_KEY variable at the top of this file');
+  if (!API_KEY) {
+    console.log('❌ Please set your API key in the environment variables (PERPLEXITY_API_KEY or PPLX_API_KEY)');
     console.log('   Get your API key from: https://www.perplexity.ai/');
     return;
   }

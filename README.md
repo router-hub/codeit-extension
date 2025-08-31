@@ -295,6 +295,34 @@ codeIt/
 3. Test various commands and scenarios
 4. Check the developer console for logs
 
+### API Testing (Development Only)
+For development and testing purposes, you can use the `test-perplexity.js` file to test the Perplexity API directly:
+
+**Option 1: Quick Setup (Recommended)**
+```bash
+# Run the setup script
+node setup-test-env.js
+
+# Then run the test
+node test-perplexity.js
+```
+
+**Option 2: Manual Setup**
+```bash
+# Set your API key as an environment variable
+export PERPLEXITY_API_KEY="your-api-key-here"
+# or
+export PPLX_API_KEY="your-api-key-here"
+
+# Run the test
+node test-perplexity.js
+```
+
+**⚠️ Security Note**: 
+- The test file is excluded from version control (`.gitignore`) to prevent accidental API key exposure
+- Never commit API keys to the repository
+- The setup script creates a `.env` file which is also gitignored
+
 ## 🤝 Contributing
 
 We welcome contributions! Please follow these steps:
